@@ -29,6 +29,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    dependencies {
+        implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+        implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
+    }
 }
 
 dependencies {
