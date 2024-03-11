@@ -2,6 +2,7 @@ package com.example.candroid_diagnostics;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class ECUActivity extends AppCompatActivity {
+
+    Handler mHandler;
 
     protected TextView variableTxt;
     protected TextView ecupagettitle;
@@ -38,16 +41,28 @@ public class ECUActivity extends AppCompatActivity {
         });
         variableTxt = findViewById(R.id.variableName);
         ecupagettitle = findViewById(R.id.ecu1title);
+
+        this.mHandler = new Handler();
+        m_Runnable.run();
     }
 
-   /* private void setupUI() {
-        variableTxt = findViewById(R.id.variableName);
+    private final Runnable m_Runnable = new Runnable()
+    {
+        public void run()
+        {
+            updateTexts();
+            ECUActivity.this.mHandler.postDelayed(m_Runnable,1000);
+        }
 
-    }
+    };
 
-    */
    private void goToMainActivity() {
        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
        startActivity(intent);
+   }
+
+   private void updateTexts()
+   {
+       variableTxt.setText("Value1: " + Globals.lookupTables.get("ecu1").get("info"));
    }
 }

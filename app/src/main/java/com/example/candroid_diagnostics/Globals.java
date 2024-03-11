@@ -11,4 +11,5 @@ public class Globals {
     public static final String MQTT_SERVER_URI = "tcp://10.0.0.47:1883";
     public static final String MQTT_CLIENT_ID = MqttAsyncClient.generateClientId(); //"candroid";
     public static HashMap<String, HashMap<String, String>> lookupTables = new HashMap<>();
+
 }

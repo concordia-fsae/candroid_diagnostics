@@ -12,6 +12,8 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.HashMap;
+
 public class Communications {
     private static final String TAG = "Communications";
 
@@ -70,7 +72,14 @@ public class Communications {
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    Log.i(TAG, "Message received on topic: " + topic + ", Message: " + new String(message.getPayload()));
+                    String msg = new String(message.getPayload());
+                    Log.i(TAG, "Message received on topic: " + topic + ", Message: " + msg);
+                    String[] strs = topic.split("/", 2);
+                    if (!Globals.lookupTables.containsKey(strs[0])) {
+                        Globals.lookupTables.put(strs[0], new HashMap<>());
+                    }
+
+                    Globals.lookupTables.get(strs[0]).put(strs[1], msg);
                 }
 
                 @Override
@@ -86,6 +95,7 @@ public class Communications {
                     // Subscribe to a topic
                     try {
                         instance.mqttClient.subscribe("announce/info", 0, null);
+                        instance.mqttClient.subscribe("ecu1/info", 0, null);
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to subscribe to topic: " + e.getMessage());
                     }
