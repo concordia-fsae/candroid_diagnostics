@@ -14,14 +14,7 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MainActivity extends AppCompatActivity {
-
-    //@Override
-    //protected void onCreate(Bundle savedInstanceState) {
-    //    super.onCreate(savedInstanceState);
-    //    setContentView(R.layout.activity_main);
-    //}
-
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "CANDroid";
     private MqttClient mqttClient;
 
     @Override
@@ -53,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             mqttClient.connect("username", "password", new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.e(TAG, "MQTT Connected");
                     runOnUiThread(new Runnable() {
                         public void run() {
                             final Toast toast = Toast.makeText(getBaseContext(), "MQTT Connected", Toast.LENGTH_SHORT);
@@ -74,10 +68,22 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            final Toast toast = Toast.makeText(getBaseContext(), "MQTT Connection Failed", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
                     Log.e(TAG, "Failed to connect to MQTT broker: " + exception.getMessage());
                 }
             });
         } catch (Exception e) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    final Toast toast = Toast.makeText(getBaseContext(), "MQTT Failure", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
             Log.e(TAG, "Failed to initialize MQTT client: " + e.getMessage() + " " + e.getCause());
         }
     }
@@ -90,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
             try {
                 mqttClient.disconnect();
             } catch (Exception e) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        final Toast toast = Toast.makeText(getBaseContext(), "MQTT Disconnect Failed.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
                 Log.e(TAG, "Failed to disconnect from MQTT broker: " + e.getMessage());
             }
         }
