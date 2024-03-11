@@ -25,77 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected Button ecu2Btn;
     protected Button ecu3Btn;
     protected Button ecu4Btn;
+    Communications comms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
-
-        // Initialize MQTT client
-        try {
-            mqttClient = MqttClient.getInstance();
-            mqttClient.setCallback(new MqttCallback() {
-                @Override
-                public void connectionLost(Throwable cause) {
-                    Log.e(TAG, "Connection lost: " + cause.getMessage());
-                }
-
-                @Override
-                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    Log.i(TAG, "Message received on topic: " + topic + ", Message: " + new String(message.getPayload()));
-                }
-
-                @Override
-                public void deliveryComplete(IMqttDeliveryToken token) {
-                    Log.i(TAG, "Message delivered");
-                }
-            });
-
-            // Connect to MQTT broker
-            mqttClient.connect("username", "password", new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.e(TAG, "MQTT Connected");
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            final Toast toast = Toast.makeText(getBaseContext(), "MQTT Connected", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
-                    // Subscribe to a topic
-                    try {
-                        mqttClient.subscribe("announce/info", 0, null);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to subscribe to topic: " + e.getMessage());
-                    }
-                    try {
-                        mqttClient.publish("announce/info", "Hello, MQTT!", 0);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to publish message: " + e.getMessage());
-                    }
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            final Toast toast = Toast.makeText(getBaseContext(), "MQTT Connection Failed", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
-                    Log.e(TAG, "Failed to connect to MQTT broker: " + exception.getMessage());
-                }
-            });
-        } catch (Exception e) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    final Toast toast = Toast.makeText(getBaseContext(), "MQTT Failure", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-            Log.e(TAG, "Failed to initialize MQTT client: " + e.getMessage() + " " + e.getCause());
-        }
+        comms.start(Communications.Comm_Class_E.MQTT, getApplicationContext());
     }
 
     private void setupUI() {
@@ -121,20 +58,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Disconnect from MQTT broker
-        if (mqttClient != null) {
-            try {
-                mqttClient.disconnect();
-            } catch (Exception e) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        final Toast toast = Toast.makeText(getBaseContext(), "MQTT Disconnect Failed.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
-                Log.e(TAG, "Failed to disconnect from MQTT broker: " + e.getMessage());
-            }
-        }
+        // Stop communications interface
+        comms.destroy();
     }
 
     private void goToECU1Activity() {
