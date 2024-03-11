@@ -2,7 +2,9 @@ package com.example.candroid_diagnostics;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
+import android.content.Context;
 import android.util.Log;
 
 import android.os.Bundle;

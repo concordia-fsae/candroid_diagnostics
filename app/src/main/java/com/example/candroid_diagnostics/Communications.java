@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -73,7 +75,12 @@ public class Communications {
             mqttClient.connect("username", "password", new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Toast.makeText(ctx, "MQTT Connected", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            final Toast toast = Toast.makeText(MainActivity.getBaseContext(), "MQTT Connected", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
 
                     // Subscribe to a topic
                     try {
