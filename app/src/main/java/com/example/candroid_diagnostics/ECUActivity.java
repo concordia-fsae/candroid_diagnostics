@@ -15,11 +15,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class ECUActivity extends AppCompatActivity {
 
-    Handler mHandler;
+    private Handler mHandler;
 
     protected TextView variableTxt;
     protected TextView ecupagettitle;
     protected ImageButton backecubtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +49,10 @@ public class ECUActivity extends AppCompatActivity {
 
     private final Runnable m_Runnable = new Runnable()
     {
-        public void run()
-        {
+        public void run() {
             updateTexts();
             ECUActivity.this.mHandler.postDelayed(m_Runnable,1000);
         }
-
     };
 
    private void goToMainActivity() {
@@ -63,6 +62,6 @@ public class ECUActivity extends AppCompatActivity {
 
    private void updateTexts()
    {
-       variableTxt.setText("Value1: " + Globals.lookupTables.get("ecu1").get("info"));
+       variableTxt.setText("Variable 1: " + Globals.getValue("ecu1", "info"));
    }
 }

@@ -12,7 +12,10 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class Communications {
     private static final String TAG = "Communications";
@@ -23,87 +26,69 @@ public class Communications {
 
 
     private static Communications instance;
-    protected Comm_Class_E comms;
+    private Comm_Class_E comms;
     private MqttClient mqttClient;
-
-    private Context ctx;
+    private ArrayList<Tuple<String, Integer>> filterList;
 
     private Communications() {
 
     }
 
-    public static synchronized Communications start(Comm_Class_E comms, Context ctx) {
+    public static synchronized Communications start(Comm_Class_E comms, ArrayList<Tuple<String, String>> vars) {
         if (instance == null) {
             instance = new Communications();
         }
 
-        instance.ctx = ctx;
         instance.comms = comms;
+        instance.filterList = new ArrayList<>();
+
+        vars.forEach((e) -> {
+            instance.filterList.add(new Tuple<String, Integer>(e.x + "/" + e.y, 0));
+        });
 
         if (instance.comms == Comm_Class_E.MQTT) {
             instance.mqttInit();
         }
+
         return instance;
     }
 
+    public void clearFilter() {
+        filterList.forEach((e) -> {
+            mqttClient.unsubscribe(e.x);
+        });
+
+        filterList.clear();
+    }
+
     public void destroy() {
+        clearFilter();
+
         if (instance.comms == Comm_Class_E.MQTT) {
             // Disconnect from MQTT broker
-            if (instance.mqttClient != null) {
-                try {
-                    instance.mqttClient.disconnect();
-                } catch (Exception e) {
-                    Log.e(TAG, "Failed to disconnect from MQTT broker: " + e.getMessage());
-                }
+            if (mqttClient != null) {
+                mqttClient.disconnect();
             }
         }
     }
 
-    protected void mqttInit() {
-
+    private void mqttInit() {
         // Initialize MQTT client
         try {
-            instance.mqttClient = MqttClient.getInstance();
-            instance.mqttClient.setCallback(new MqttCallback() {
-                @Override
-                public void connectionLost(Throwable cause) {
-                    Log.e(TAG, "Connection lost: " + cause.getMessage());
-                }
-
-                @Override
-                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    String msg = new String(message.getPayload());
-                    Log.i(TAG, "Message received on topic: " + topic + ", Message: " + msg);
-                    String[] strs = topic.split("/", 2);
-                    if (!Globals.lookupTables.containsKey(strs[0])) {
-                        Globals.lookupTables.put(strs[0], new HashMap<>());
-                    }
-
-                    Globals.lookupTables.get(strs[0]).put(strs[1], msg);
-                }
-
-                @Override
-                public void deliveryComplete(IMqttDeliveryToken token) {
-                    Log.i(TAG, "Message delivered");
-                }
-            });
+            mqttClient = MqttClient.getInstance();
 
             // Connect to MQTT broker
-            instance.mqttClient.connect("username", "password", new IMqttActionListener() {
+            mqttClient.connect("username", "password", new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // Subscribe to a topic
-                    try {
-                        instance.mqttClient.subscribe("announce/info", 0, null);
-                        instance.mqttClient.subscribe("ecu1/info", 0, null);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to subscribe to topic: " + e.getMessage());
-                    }
-                    try {
-                        instance.mqttClient.publish("announce/info", "Hello, MQTT!", 0);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to publish message: " + e.getMessage());
-                    }
+                    filterList.forEach((e) -> {
+                        mqttClient.subscribe(e.x, e.y, null);
+                    });
+
+                    mqttClient.publish("announce/info", "Hello MQTT from Android!", 0);
+
+                    Log.i(TAG, "MQTT connection established!");
                 }
 
                 @Override

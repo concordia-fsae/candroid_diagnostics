@@ -16,3 +16,6 @@ local.properties
 **/bin/**
 **/lib**
 env
+/.idea/*
+
+/.idea

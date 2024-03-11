@@ -19,6 +19,8 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "CANDroid";
     private MqttClient mqttClient;
@@ -34,7 +36,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
-        comms.start(Communications.Comm_Class_E.MQTT, getApplicationContext());
+        setupCommunications();
+    }
+
+    private void setupCommunications() {
+        ArrayList<Tuple<String, String>> vars = new ArrayList<>();
+
+        vars.add(new Tuple<String, String>("ecu1", "info"));
+        vars.add(new Tuple<String, String>("announce", "info"));
+
+        comms.start(Communications.Comm_Class_E.MQTT, vars);
     }
 
     private void setupUI() {
