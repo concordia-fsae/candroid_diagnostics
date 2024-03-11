@@ -29,7 +29,6 @@ public class MqttClient {
     }
 
     public static synchronized MqttClient getInstance() throws MqttException {
-
         if (instance == null) {
             instance = new MqttClient();
         }

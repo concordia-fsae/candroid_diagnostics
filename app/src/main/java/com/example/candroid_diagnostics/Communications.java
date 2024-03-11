@@ -21,27 +21,35 @@ public class Communications {
 
 
     private static Communications instance;
-    private static Comm_Class_E comms;
+    protected Comm_Class_E comms;
     private MqttClient mqttClient;
 
-    private Communications(Context ctx) {
+    private Context ctx;
+
+    private Communications() {
 
     }
 
-    public void start(Comm_Class_E comms, Context ctx) {
-        this.comms = comms;
-
-        if (comms == Comm_Class_E.MQTT) {
-            mqttInit(ctx);
+    public static synchronized Communications start(Comm_Class_E comms, Context ctx) {
+        if (instance == null) {
+            instance = new Communications();
         }
+
+        instance.ctx = ctx;
+        instance.comms = comms;
+
+        if (instance.comms == Comm_Class_E.MQTT) {
+            instance.mqttInit();
+        }
+        return instance;
     }
 
     public void destroy() {
-        if (comms == Comm_Class_E.MQTT) {
+        if (instance.comms == Comm_Class_E.MQTT) {
             // Disconnect from MQTT broker
-            if (mqttClient != null) {
+            if (instance.mqttClient != null) {
                 try {
-                    mqttClient.disconnect();
+                    instance.mqttClient.disconnect();
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to disconnect from MQTT broker: " + e.getMessage());
                 }
@@ -49,12 +57,12 @@ public class Communications {
         }
     }
 
-    private void mqttInit(Context ctx) {
+    protected void mqttInit() {
 
         // Initialize MQTT client
         try {
-            mqttClient = MqttClient.getInstance();
-            mqttClient.setCallback(new MqttCallback() {
+            instance.mqttClient = MqttClient.getInstance();
+            instance.mqttClient.setCallback(new MqttCallback() {
                 @Override
                 public void connectionLost(Throwable cause) {
                     Log.e(TAG, "Connection lost: " + cause.getMessage());
@@ -72,24 +80,17 @@ public class Communications {
             });
 
             // Connect to MQTT broker
-            mqttClient.connect("username", "password", new IMqttActionListener() {
+            instance.mqttClient.connect("username", "password", new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            final Toast toast = Toast.makeText(MainActivity.getBaseContext(), "MQTT Connected", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
-
                     // Subscribe to a topic
                     try {
-                        mqttClient.subscribe("announce/info", 0, null);
+                        instance.mqttClient.subscribe("announce/info", 0, null);
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to subscribe to topic: " + e.getMessage());
                     }
                     try {
-                        mqttClient.publish("announce/info", "Hello, MQTT!", 0);
+                        instance.mqttClient.publish("announce/info", "Hello, MQTT!", 0);
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to publish message: " + e.getMessage());
                     }
