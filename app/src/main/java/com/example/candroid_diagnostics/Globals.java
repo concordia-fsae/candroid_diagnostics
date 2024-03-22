@@ -2,14 +2,16 @@ package com.example.candroid_diagnostics;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Globals {
     // Base concept from https://stackoverflow.com/questions/1944656/android-global-variable
 
-    public static final String MQTT_SERVER_URI = "tcp://10.0.0.47:1883";
+    public static String MQTT_SERVER_URI = "tcp://10.0.0.47:1883";
+
     public static HashMap<String, HashMap<String, String>> lookupTables = new HashMap<>();
+    public static String selected_ecu;
 
     public static boolean valueExists(String ecu, String val) {
         if (tableExists(ecu)) {
@@ -35,5 +37,17 @@ public class Globals {
             return lookupTables.get(ecu).get(val);
 
         return "";
+    }
+
+    public static Set<String> getECUs() {
+        return lookupTables.keySet();
+    }
+
+    public static Set<String> getECUVariables(String ecu) {
+        if (tableExists(ecu)) {
+            return lookupTables.get(ecu).keySet();
+        }
+
+        return null;
     }
 }

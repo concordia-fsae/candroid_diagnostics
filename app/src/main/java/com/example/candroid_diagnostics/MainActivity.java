@@ -29,23 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected Button ecu2Btn;
     protected Button ecu3Btn;
     protected Button ecu4Btn;
-    Communications comms;
+    private Communications comms;
+
+    protected Button settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
-        setupCommunications();
-    }
-
-    private void setupCommunications() {
-        ArrayList<Tuple<String, String>> vars = new ArrayList<>();
-
-        vars.add(new Tuple<String, String>("ecu1", "info"));
-        vars.add(new Tuple<String, String>("announce", "info"));
-
-        comms.start(Communications.Comm_Class_E.MQTT, vars);
     }
 
     private void setupUI() {
@@ -53,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         diagnosticBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                goToDiagnosticActivity();
+                //goToDiagnosticActivity();
+                Globals.selected_ecu = "diag";
+                goToECU1Activity();
             }
         });
 
@@ -62,10 +55,47 @@ public class MainActivity extends AppCompatActivity {
         ecu1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Globals.selected_ecu = "ecu1";
                 goToECU1Activity();
             }
         });
+
+        ecu2Btn = findViewById(R.id.ECU2btn);
+        ecu2Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Globals.selected_ecu = "ecu2";
+                goToECU1Activity();
+            }
+        });
+
+        ecu3Btn = findViewById(R.id.ECU3btn);
+        ecu3Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Globals.selected_ecu = "ecu3";
+                goToECU1Activity();
+            }
+        });
+
+        ecu4Btn = findViewById(R.id.ECU4btn);
+        ecu4Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Globals.selected_ecu = "ecu4";
+                goToECU1Activity();
+            }
+        });
+
+        settingsBtn=findViewById(R.id.SettingsBtn);
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                goToSettingsActivity();
+            }
+        });
+
     }
 
     @Override
@@ -82,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void goToDiagnosticActivity() {
         Intent intent = new Intent(getApplicationContext(), DiagnosticActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToSettingsActivity() {
+        Intent intent = new Intent(getApplicationContext(), Settings.class);
         startActivity(intent);
     }
 }

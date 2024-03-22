@@ -48,6 +48,28 @@
         app:strokeColor="@color/design_default_color_error" />
 
     <Button
+        android:id="@+id/SettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/material_dynamic_neutral70"
+        android:insetTop="10dp"
+        android:insetBottom="10dp"
+        android:text="Settings"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:iconPadding="10dp"
+        app:iconTint="@color/design_default_color_error"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.887"
+        app:rippleColor="@color/design_default_color_error"
+        app:strokeColor="@color/design_default_color_error" />
+
+    <Button
         android:id="@+id/ECU1btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

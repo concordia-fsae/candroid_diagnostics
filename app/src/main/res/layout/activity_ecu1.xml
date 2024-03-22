@@ -8,19 +8,6 @@
     tools:context=".ECUActivity">
 
     <TextView
-        android:id="@+id/variableName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Variable 1: Value"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.196"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.261" />
-
-    <TextView
         android:id="@+id/ecu1title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,9 +24,11 @@
 
     <ImageButton
         android:id="@+id/bck2Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="57dp"
+        android:layout_height="51dp"
         android:backgroundTint="@color/material_dynamic_tertiary90"
+        android:contentDescription="a"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.008"
@@ -47,5 +36,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
         app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewECU1"
+        android:layout_width="409dp"
+        android:layout_height="647dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ecu1title" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
