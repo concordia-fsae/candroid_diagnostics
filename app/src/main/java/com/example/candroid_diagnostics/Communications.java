@@ -61,15 +61,19 @@ public class Communications {
         filterList.clear();
     }
 
-    public void destroy() {
-        clearFilter();
+    public static void destroy() {
+        if (instance == null) return;
+
+        instance.clearFilter();
 
         if (instance.comms == Comm_Class_E.MQTT) {
             // Disconnect from MQTT broker
-            if (mqttClient != null) {
-                mqttClient.disconnect();
+            if (instance.mqttClient != null) {
+                instance.mqttClient.disconnect();
             }
         }
+
+        instance.mqttClient = null;
     }
 
     private void mqttInit() {
@@ -78,26 +82,21 @@ public class Communications {
             mqttClient = MqttClient.getInstance();
 
             // Connect to MQTT broker
-            mqttClient.connect("username", "password", new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    // Subscribe to a topic
-                    filterList.forEach((e) -> {
-                        mqttClient.subscribe(e.x, e.y, null);
-                    });
-
-                    mqttClient.publish("announce/info", "Hello MQTT from Android!", 0);
-
-                    Log.i(TAG, "MQTT connection established!");
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.e(TAG, "Failed to connect to MQTT broker: " + exception.getMessage());
-                }
-            });
+            mqttClient.connect(filterList);
         } catch (Exception e) {
             Log.e(TAG, "Failed to initialize MQTT client: " + e.getMessage() + " " + e.getCause());
         }
+    }
+
+    public static boolean isConnected() {
+        if (instance == null) return false;
+        if (instance.mqttClient== null) return false;
+        return instance.mqttClient.isConnected();
+    }
+
+    public static boolean isConnecting() {
+        if (instance == null) return false;
+        if (instance.mqttClient== null) return false;
+        return instance.mqttClient.isConnecting();
     }
 }

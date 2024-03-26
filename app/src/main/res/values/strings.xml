@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">CANDroid Diagnostics</string>
+
+    <string-array name="sensor_names">
+        <item>Sensor 1</item>
+        <item>Sensor 2</item>
+        <item>Sensor 3</item>
+        <item>Sensor 4</item>
+        <item>Sensor 5</item>
+        <item>Sensor 6</item>
+        <item>Sensor 7</item>
+        <item>Sensor 8</item>
+        <item>Sensor 9</item>
+    </string-array>
+
+    <string-array name="dummyData1_names">
+        <item>Data 1 1</item>
+        <item>Data 1 2</item>
+        <item>Data 1 3</item>
+        <item>Data 1 4</item>
+        <item>Data 1 5</item>
+        <item>Data 1 6</item>
+        <item>Data 1 7</item>
+        <item>Data 1 8</item>
+        <item>Data 1 9</item>
+    </string-array>
+
+    <string-array name="dummyData2_names">
+        <item>Data 2 1</item>
+        <item>Data 2 2</item>
+        <item>Data 2 3</item>
+        <item>Data 2 4</item>
+        <item>Data 2 5</item>
+        <item>Data 2 6</item>
+        <item>Data 2 7</item>
+        <item>Data 2 8</item>
+        <item>Data 2 9</item>
+    </string-array>
+
+
+
 </resources>

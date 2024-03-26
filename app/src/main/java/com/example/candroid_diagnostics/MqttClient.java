@@ -18,12 +18,15 @@ import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class MqttClient {
     private static final String TAG = "MQTT Wrapper";
 
     private static MqttClient instance;
     private MqttAsyncClient mqttClient;
+    private boolean connected = false;
+    private boolean connecting = false;
 
     private MqttClient() throws MqttException {
         mqttClient = new MqttAsyncClient(Globals.MQTT_SERVER_URI,
@@ -34,6 +37,7 @@ public class MqttClient {
             @Override
             public void connectionLost(Throwable cause) {
                 Log.e(TAG, "Connection lost: " + cause.getMessage());
+                connected = false;
             }
 
             @Override
@@ -53,17 +57,41 @@ public class MqttClient {
     }
 
     public static synchronized MqttClient getInstance() throws MqttException {
-        if (instance == null) {
-            instance = new MqttClient();
-        }
+        instance = new MqttClient();
         return instance;
     }
 
-    public void connect(String username, String password, IMqttActionListener callback) throws Exception {
+    public void connect(ArrayList<Tuple<String, Integer>> filterList) throws Exception {
+        connect("username", "password", new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                // Subscribe to a topic
+                filterList.forEach((e) -> {
+                    subscribe(e.x, e.y, null);
+                });
+                connecting = false;
+                connected = true;
+
+                publish("announce/info", "Hello MQTT from Android!", 0);
+
+                Log.i(TAG, "MQTT connection established!");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.e(TAG, "Failed to connect to MQTT broker: " + exception.getMessage());
+                connecting = false;
+                connected = false;
+            }
+        });
+    }
+
+    private void connect(String username, String password, IMqttActionListener callback) throws Exception {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(username);
         options.setPassword(password.toCharArray());
         mqttClient.connect(options, null, callback);
+        connecting = true;
     }
 
     public void subscribe(String topic, int qos, IMqttActionListener callback) {
@@ -94,6 +122,8 @@ public class MqttClient {
         } catch (Exception e) {
             Log.e(TAG, "Failed to disconnect from MQTT broker: " + e.getMessage());
         }
+
+        connected = false;
     }
 
     public void unsubscribe(String topic) {
@@ -102,5 +132,13 @@ public class MqttClient {
         } catch (Exception e) {
             Log.e(TAG, "Failed to unsubscribe from MQTT topic: " + e.getMessage());
         }
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public boolean isConnecting() {
+        return connecting;
     }
 }
