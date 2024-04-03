@@ -42,7 +42,7 @@ public class ECUActivity extends AppCompatActivity {
         ecupagettitle.setText(Globals.selected_ecu + " Activity");
 
         this.mHandler = new Handler();
-        m_Runnable.run();
+        //m_Runnable.run();
     }
 
     private final Runnable m_Runnable = new Runnable()

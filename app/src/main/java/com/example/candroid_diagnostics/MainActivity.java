@@ -1,10 +1,13 @@
 package com.example.candroid_diagnostics;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import android.os.Bundle;
@@ -32,12 +35,51 @@ public class MainActivity extends AppCompatActivity {
     private Communications comms;
 
     protected Button settingsBtn;
+    private boolean welcomemsg = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
+
+        //To display the Welcome message on the first use.
+        SharedPreferences sharedPreferences = getSharedPreferences("welcomemessage", Context.MODE_PRIVATE);
+        welcomemsg = sharedPreferences.getBoolean("firstUse", true);
+        if (welcomemsg) {
+            welcomeMessageAlert();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("firstUse", false);
+            editor.apply();
+        }
+
+
+    }
+
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (welcomemsg) {
+            welcomeMessageAlert();
+            welcomemsg = false;
+        }
+    }
+
+     */
+
+    private void welcomeMessageAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle("WELCOME TO CANDroid APP!")
+                .setMessage("You'll be able to easily make diagnostics and evaluate your data. Click on " +
+                        " the little info buttons to see the role of each component of this app.")
+                .setPositiveButton("Okay, got it", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
     }
 
     private void setupUI() {

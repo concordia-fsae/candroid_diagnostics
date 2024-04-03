@@ -1,6 +1,9 @@
 package com.example.candroid_diagnostics;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -21,10 +25,12 @@ import java.util.ArrayList;
 public class Settings extends AppCompatActivity {
 
     protected ImageButton bckMainbtn;
+    protected ImageButton infoDialog;
     protected Switch connectionSwitch;
     protected TextView statustxt;
     protected EditText mqttTxt;
     private Handler mHandler;
+
 
 
     @Override
@@ -33,13 +39,16 @@ public class Settings extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
         setupUI();
-        mqttTxt.setText(Globals.MQTT_SERVER_URI);
+        //mqttTxt.setText(Globals.MQTT_SERVER_URI);
+
 
         updateTexts();
 
         this.mHandler = new Handler();
-        m_Runnable.run();
+       // m_Runnable.run();
     }
+
+
 
     private void updateTexts() {
         if (Communications.isConnecting()) {
@@ -79,6 +88,31 @@ public class Settings extends AppCompatActivity {
         statustxt = findViewById(R.id.StatusText);
         mqttTxt = findViewById(R.id.mqqtText);
         statustxt.setText("");
+
+        infoDialog= findViewById(R.id.infoSettings);
+        infoDialog.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = makeNewDialog();
+                dialog.show();
+
+
+            }
+        });
+    }
+
+    AlertDialog makeNewDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enter below the IP address of the computer you want to connect to (ex: 10.0.0.47:1883). You" +
+                " will then be able to use the switch below to connect your device.");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builder.create();
     }
 
     private void goToMainActivity() {
