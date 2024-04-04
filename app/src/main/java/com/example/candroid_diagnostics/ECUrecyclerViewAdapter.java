@@ -38,6 +38,7 @@ public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerView
 
         holder.sensorName.setText(sensorModels.get(position).getSensorName());
         holder.data1.setText(sensorModels.get(position).getDataValue1());
+        holder.data2.setText(sensorModels.get(position).getDataValue2());
         holder.imageView.setImageResource(sensorModels.get(position).getImage());
     }
 
@@ -59,6 +60,7 @@ public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerView
             imageView = itemView.findViewById(R.id.imageDisplayView1);
             sensorName = itemView.findViewById(R.id.sensorNameTextView);
             data1 = itemView.findViewById(R.id.dataDisplayTextView1);
+            data2 = itemView.findViewById(R.id.dataDisplayTextView2);
         }
     }
 }

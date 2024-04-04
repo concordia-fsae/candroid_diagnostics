@@ -49,7 +49,7 @@ public class ECUActivity extends AppCompatActivity {
     {
         public void run() {
             ECUActivity.this.mHandler.postDelayed(m_Runnable,1000);
-            updateTexts();
+            //updateTexts();
         }
     };
 
@@ -57,9 +57,10 @@ public class ECUActivity extends AppCompatActivity {
     private void setUpSensorModels(){
         String[] sensorNames = getResources().getStringArray(R.array.sensor_names);
         String[] Data1 = getResources().getStringArray(R.array.dummyData1_names);
+        String[] Data2 = getResources().getStringArray(R.array.dummyData2_names);
 
         for(int i=0; i<sensorNames.length; i++){
-            sensorModels.add(new sensorModel(sensorNames[i], Data1[i], sensorImages[0]));
+            sensorModels.add(new sensorModel(sensorNames[i], Data1[i], Data2[i],sensorImages[0]));
         }
     }
 
@@ -99,7 +100,7 @@ public class ECUActivity extends AppCompatActivity {
 
         if (Globals.getECUVariables(Globals.selected_ecu) == null) return;
         for (String s : Globals.getECUVariables(Globals.selected_ecu)) {
-            sensorModels.add(new sensorModel(s, Globals.getValue(Globals.selected_ecu, s), sensorImages[0]));
+            sensorModels.add(new sensorModel(s, Globals.getValue(Globals.selected_ecu, s), "units", sensorImages[0]));
         }
 
         adapter.notifyDataSetChanged();
