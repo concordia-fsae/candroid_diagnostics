@@ -87,7 +87,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:padding="16dp"
-        android:text="Temperature: "
+        android:text="Max Cell Temperature: "
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

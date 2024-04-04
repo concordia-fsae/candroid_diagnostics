@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerViewAdapter.MyViewHolder> {
+    private final RecyclerViewInterface recyclerViewInterface;
     Context context;
     ArrayList<sensorModel> sensorModels;
 
-    public ECUrecyclerViewAdapter(Context context, ArrayList<sensorModel> sensorModels){
+    public ECUrecyclerViewAdapter(Context context, ArrayList<sensorModel> sensorModels, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.sensorModels = sensorModels;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerView
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_row,parent, false);
 
-        return new ECUrecyclerViewAdapter.MyViewHolder(view);
+        return new ECUrecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -38,7 +40,9 @@ public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerView
 
         holder.sensorName.setText(sensorModels.get(position).getSensorName());
         holder.data1.setText(sensorModels.get(position).getDataValue1());
+        holder.data2.setText(sensorModels.get(position).getDataValue2());
         holder.imageView.setImageResource(sensorModels.get(position).getImage());
+
     }
 
     @Override
@@ -53,12 +57,29 @@ public class ECUrecyclerViewAdapter extends RecyclerView.Adapter<ECUrecyclerView
         ImageView imageView;
         TextView sensorName, data1, data2;
 
-        public MyViewHolder(@NonNull View itemView) {
+        //GraphView graph;
+        //graph = (GraphView) findViewById(R.id.graphECU1);
+        //GraphView graph = (GraphView) findViewById(R.id.graphECU1);
+        public MyViewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageDisplayView1);
             sensorName = itemView.findViewById(R.id.sensorNameTextView);
             data1 = itemView.findViewById(R.id.dataDisplayTextView1);
+            data2 = itemView.findViewById(R.id.dataDisplayTextView2);
+           // graph = itemView.findViewByIdId(R.id.graphECU1);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 }

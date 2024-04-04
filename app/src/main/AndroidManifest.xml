@@ -20,6 +20,9 @@
             android:name=".ConfigurationActivity"
             android:exported="false" />
         <activity
+            android:name=".graphActivity"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:exported="false" />
         <activity

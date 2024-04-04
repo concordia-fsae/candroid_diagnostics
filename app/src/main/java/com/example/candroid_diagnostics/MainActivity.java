@@ -25,7 +25,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     private static final String TAG = "CANDroid";
     private MqttClient mqttClient;
     protected Button diagnosticBtn;
