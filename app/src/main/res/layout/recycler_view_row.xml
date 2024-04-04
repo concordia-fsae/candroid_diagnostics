@@ -8,24 +8,31 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#E43D3D"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="128dp"
+            android:animateLayoutChanges="true"
+            android:verticalScrollbarPosition="defaultPosition">
 
             <ImageView
                 android:id="@+id/imageDisplayView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/baseline_hardware_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/baseline_hardware_24" />
 
             <TextView
                 android:id="@+id/sensorNameTextView"
@@ -39,13 +46,24 @@
 
             <TextView
                 android:id="@+id/dataDisplayTextView1"
-                android:layout_width="253dp"
-                android:layout_height="46dp"
+                android:layout_width="164dp"
+                android:layout_height="42dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="12dp"
                 android:text="TextView"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/imageDisplayView1"
+                app:layout_constraintTop_toBottomOf="@+id/sensorNameTextView" />
+
+            <TextView
+                android:id="@+id/dataDisplayTextView2"
+                android:layout_width="109dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="12dp"
+                android:text="TextView"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/dataDisplayTextView1"
                 app:layout_constraintTop_toBottomOf="@+id/sensorNameTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
