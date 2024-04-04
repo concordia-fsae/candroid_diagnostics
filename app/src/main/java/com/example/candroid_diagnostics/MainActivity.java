@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected Button ecu3Btn;
     protected Button ecu4Btn;
     private Communications comms;
+    protected ImageButton infoDiag;
+    protected ImageButton infoSet;
+    protected ImageButton infoEcu;
+
 
     protected Button settingsBtn;
     private boolean welcomemsg = true;
@@ -56,17 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (welcomemsg) {
-            welcomeMessageAlert();
-            welcomemsg = false;
-        }
-    }
-
-     */
 
     private void welcomeMessageAlert() {
         new AlertDialog.Builder(this)
@@ -137,6 +131,77 @@ public class MainActivity extends AppCompatActivity {
                 goToSettingsActivity();
             }
         });
+
+        infoDiag= findViewById(R.id.infoDiagnosticBtn);
+        infoDiag.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = DiagDialog();
+                dialog.show();
+
+
+            }
+        });
+
+        infoEcu= findViewById(R.id.infoECUBtn);
+        infoEcu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = ECUDialog();
+                dialog.show();
+
+            }
+        });
+
+        infoSet= findViewById(R.id.infoSettingsBtn);
+        infoSet.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = SetDialog();
+                dialog.show();
+
+            }
+        });
+
+    }
+
+    AlertDialog SetDialog() {
+        AlertDialog.Builder builderSet = new AlertDialog.Builder(this);
+        builderSet.setMessage("Here is where you can connect your device to the computer you are using through its IP address.");
+
+        builderSet.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builderSet.create();
+    }
+
+    AlertDialog ECUDialog() {
+        AlertDialog.Builder builderECU = new AlertDialog.Builder(this);
+        builderECU.setMessage("Here is where you can find generated values for the variables tested. This app reads the data every second.");
+
+        builderECU.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builderECU.create();
+    }
+
+    AlertDialog DiagDialog() {
+        AlertDialog.Builder builderDiag = new AlertDialog.Builder(this);
+        builderDiag.setMessage("Here is where you can find the error messages generated.");
+
+        builderDiag.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builderDiag.create();
 
     }
 

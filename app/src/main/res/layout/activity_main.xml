@@ -127,16 +127,16 @@
 
     <ImageButton
         android:id="@+id/infoSettingsBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="26dp"
+        android:layout_height="25dp"
         android:backgroundTint="#FDF6FE"
         android:tint="#728E91"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintHorizontal_bias="0.896"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423"
+        app:layout_constraintVertical_bias="0.749"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
 
     <ImageButton
