@@ -39,7 +39,6 @@ public class DiagnosticActivity extends AppCompatActivity {
             return insets;
         });
     }
-
     private void setupUI() {
         ecu1Txt = findViewById(R.id.ecuTxt);
         errormsg = findViewById(R.id.errormsgTxt);

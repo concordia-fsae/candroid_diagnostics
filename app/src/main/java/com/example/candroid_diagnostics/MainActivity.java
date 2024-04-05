@@ -33,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
     protected Button ecu2Btn;
     protected Button ecu3Btn;
     protected Button ecu4Btn;
+    protected Button configBtn;
     private Communications comms;
     protected ImageButton infoDiag;
     protected ImageButton infoSet;
     protected ImageButton infoEcu;
+    protected ImageButton infoConf;
 
 
     protected Button settingsBtn;
@@ -81,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         diagnosticBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //goToDiagnosticActivity();
+                goToDiagnosticActivity();
                 Globals.selected_ecu = "diag";
-                goToECU1Activity();
+                //goToECU1Activity();
             }
         });
 
@@ -122,6 +124,16 @@ public class MainActivity extends AppCompatActivity {
                 goToECU1Activity();
             }
         });
+
+        configBtn = findViewById(R.id.ConfigBtn);
+
+        configBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToConfigActivity();
+            }
+        });
+
 
         settingsBtn=findViewById(R.id.SettingsBtn);
         settingsBtn.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +175,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        infoConf= findViewById(R.id.infoConfigurationBtn);
+        infoConf.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = ConfDialog();
+                dialog.show();
+            }
+        });
+
+    }
+
+
+    AlertDialog ConfDialog() {
+        AlertDialog.Builder builderConf = new AlertDialog.Builder(this);
+        builderConf.setMessage("Here is where you can make default configuration and set expected values for some variables.");
+
+        builderConf.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        return builderConf.create();
     }
 
     AlertDialog SetDialog() {
@@ -224,6 +258,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void goToSettingsActivity() {
         Intent intent = new Intent(getApplicationContext(), Settings.class);
+        startActivity(intent);
+    }
+
+    private void goToConfigActivity() {
+        Intent intent = new Intent(getApplicationContext(), ConfigurationActivity.class);
         startActivity(intent);
     }
 }

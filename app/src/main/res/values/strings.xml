@@ -37,5 +37,11 @@
         <item>Data 2 9</item>
     </string-array>
 
+    <string-array name="ip_default_address">
+        <item>String 1</item>
+        <item>String 2</item>
+        <item>String 3</item>
+    </string-array>
+
 
 </resources>
