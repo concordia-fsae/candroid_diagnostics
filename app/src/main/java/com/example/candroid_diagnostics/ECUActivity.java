@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.os.Handler;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ECUActivity extends AppCompatActivity {
+public class ECUActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private Handler mHandler;
     protected TextView ecupagettitle;
@@ -30,7 +27,7 @@ public class ECUActivity extends AppCompatActivity {
     ECUrecyclerViewAdapter adapter;
 
     ArrayList<sensorModel> sensorModels = new ArrayList<>();
-    int [] sensorImages = {R.drawable.baseline_hardware_24};
+    int [] sensorImages = {R.drawable.baseline_hardware_24, R.drawable.check_ok_symbol, R.drawable.error_symbol};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +37,16 @@ public class ECUActivity extends AppCompatActivity {
         setupUI();
         setUpSensorModels();
         ecupagettitle.setText(Globals.selected_ecu + " Activity");
+
+//        GraphView graph = (GraphView) findViewById(R.id.graphECU1);
+//        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+//                new DataPoint(0, 1),
+//                new DataPoint(1, 5),
+//                new DataPoint(2, 3),
+//                new DataPoint(3, 2),
+//                new DataPoint(4, 6)
+//        });
+//        graph.addSeries(series);
 
         this.mHandler = new Handler();
         m_Runnable.run();
@@ -54,14 +61,17 @@ public class ECUActivity extends AppCompatActivity {
     };
 
 
+
     private void setUpSensorModels(){
         String[] sensorNames = getResources().getStringArray(R.array.sensor_names);
         String[] Data1 = getResources().getStringArray(R.array.dummyData1_names);
-        String[] Data2 = getResources().getStringArray(R.array.dummyData2_names);
+        String[] Data2 = getResources().getStringArray(R.array.units_names);
 
         for(int i=0; i<sensorNames.length; i++){
-            sensorModels.add(new sensorModel(sensorNames[i], Data1[i], Data2[i],sensorImages[0]));
+            sensorModels.add(new sensorModel(sensorNames[i], Data1[i], Data2[i],sensorImages[i%3]));
         }
+
+
     }
 
    private void setupUI() {
@@ -77,7 +87,7 @@ public class ECUActivity extends AppCompatActivity {
        recyclerView = findViewById(R.id.recyclerViewECU1);
        setUpSensorModels();
 
-       adapter = new ECUrecyclerViewAdapter(this,sensorModels);
+       adapter = new ECUrecyclerViewAdapter(this,sensorModels, this);
        recyclerView.setAdapter(adapter);
        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -100,9 +110,18 @@ public class ECUActivity extends AppCompatActivity {
 
         if (Globals.getECUVariables(Globals.selected_ecu) == null) return;
         for (String s : Globals.getECUVariables(Globals.selected_ecu)) {
-            sensorModels.add(new sensorModel(s, Globals.getValue(Globals.selected_ecu, s), "units", sensorImages[0]));
+            //sensorModels.add(new sensorModel(s, Globals.getValue(Globals.selected_ecu, s), "units", sensorImages[0]));
+            sensorModels.add(new sensorModel(s, Globals.getValue(Globals.selected_ecu, s), sensorImages[0])); //constructor override !!!
         }
+
 
         adapter.notifyDataSetChanged();
    }
+
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(ECUActivity.this, graphActivity.class);
+        startActivity(intent);
+    }
 }

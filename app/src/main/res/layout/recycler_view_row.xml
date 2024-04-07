@@ -6,21 +6,21 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#E43D3D"
+        android:layout_width="406dp"
+        android:layout_height="201dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
+        android:background="#E43D3D"
         app:cardBackgroundColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="205dp"
             android:animateLayoutChanges="true"
             android:verticalScrollbarPosition="defaultPosition">
 
@@ -28,44 +28,59 @@
                 android:id="@+id/imageDisplayView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintTop_toBottomOf="@+id/sensorNameTextView"
+                app:layout_constraintVertical_bias="0.466"
                 app:srcCompat="@drawable/baseline_hardware_24" />
 
             <TextView
                 android:id="@+id/sensorNameTextView"
-                android:layout_width="241dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/imageDisplayView1"
+                android:layout_width="387dp"
+                android:layout_height="81dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:textColor="#2196F3"
+                android:textSize="34sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/dataDisplayTextView1"
-                android:layout_width="164dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="150dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
                 android:text="TextView"
-                android:textSize="18sp"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="30sp"
                 app:layout_constraintStart_toEndOf="@+id/imageDisplayView1"
                 app:layout_constraintTop_toBottomOf="@+id/sensorNameTextView" />
 
             <TextView
                 android:id="@+id/dataDisplayTextView2"
-                android:layout_width="109dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="123dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
                 android:text="TextView"
-                android:textSize="18sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.17"
                 app:layout_constraintStart_toEndOf="@+id/dataDisplayTextView1"
                 app:layout_constraintTop_toBottomOf="@+id/sensorNameTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        <com.jjoe64.graphview.GraphView-->
+        <!--            android:id="@+id/graphECU1"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="200dip"-->
+        <!--            android:layout_marginTop="150dp" />-->
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

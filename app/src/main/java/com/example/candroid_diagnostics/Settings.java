@@ -102,29 +102,33 @@ public class Settings extends AppCompatActivity {
     }
 
     private void setupCommunications() {
+        String[] sensorNames = getResources().getStringArray(R.array.sensor_names);
         ArrayList<Tuple<String, String>> vars = new ArrayList<>();
+        for(int i=0; i<sensorNames.length; i++){
+            vars.add(new Tuple<String, String>("ecu1", sensorNames[i]));
+        }
 
-        vars.add(new Tuple<String, String>("ecu1", "Min Cell Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Max Cell Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Avg Cell Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Min Relative SOC"));
-        vars.add(new Tuple<String, String>("ecu1", "Max Relative SOC"));
-        vars.add(new Tuple<String, String>("ecu1", "Avg Relative SOC"));
-        vars.add(new Tuple<String, String>("ecu1", "CCL"));
-        vars.add(new Tuple<String, String>("ecu1", "DCL"));
-        vars.add(new Tuple<String, String>("ecu1", "Pack Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Cell 1 Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Cell 2 Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Cell 3 Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Cell 4 Voltage"));
-        vars.add(new Tuple<String, String>("ecu1", "Max Cell Temp"));
-        vars.add(new Tuple<String, String>("ecu1", "MCU Temp"));
-        vars.add(new Tuple<String, String>("ecu1", "Board Temp 1"));
-        vars.add(new Tuple<String, String>("ecu1", "Board Temp 2"));
-        vars.add(new Tuple<String, String>("ecu1", "Fan 1 Speed"));
-        vars.add(new Tuple<String, String>("ecu1", "Fan 2 Speed"));
-
-        vars.add(new Tuple<String, String>("ecu1", ""));
+//        vars.add(new Tuple<String, String>("ecu1", "Min Cell Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Max Cell Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Avg Cell Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Min Relative SOC"));
+//        vars.add(new Tuple<String, String>("ecu1", "Max Relative SOC"));
+//        vars.add(new Tuple<String, String>("ecu1", "Avg Relative SOC"));
+//        vars.add(new Tuple<String, String>("ecu1", "CCL"));
+//        vars.add(new Tuple<String, String>("ecu1", "DCL"));
+//        vars.add(new Tuple<String, String>("ecu1", "Pack Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Cell 1 Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Cell 2 Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Cell 3 Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Cell 4 Voltage"));
+//        vars.add(new Tuple<String, String>("ecu1", "Max Cell Temp"));
+//        vars.add(new Tuple<String, String>("ecu1", "MCU Temp"));
+//        vars.add(new Tuple<String, String>("ecu1", "Board Temp 1"));
+//        vars.add(new Tuple<String, String>("ecu1", "Board Temp 2"));
+//        vars.add(new Tuple<String, String>("ecu1", "Fan 1 Speed"));
+//        vars.add(new Tuple<String, String>("ecu1", "Fan 2 Speed"));
+//
+//        vars.add(new Tuple<String, String>("ecu1", ""));
 
 
         Communications.start(Communications.Comm_Class_E.MQTT, vars);
