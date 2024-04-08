@@ -86,7 +86,7 @@ public class ECUActivity extends AppCompatActivity implements RecyclerViewInterf
        });
 
        countVar = findViewById(R.id.countVariables);
-       countVar.setText("Number of variables displayed: " + String.valueOf(sensorModels.size()));
+       countVar.setText("Number of variables displayed: " + sensorModels.size());
 
 
        recyclerView = findViewById(R.id.recyclerViewECU1);

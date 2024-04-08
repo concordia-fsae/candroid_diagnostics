@@ -3,6 +3,7 @@ package com.example.candroid_diagnostics;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -21,11 +23,13 @@ public class graphActivity extends AppCompatActivity {
 
 
 protected TextView graphTitle;
+protected ImageButton backGrphBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        setupUI();
 
         GraphView graph = (GraphView) findViewById(R.id.graphECU1);
         LineGraphSeries<DataPoint> Series = new LineGraphSeries<>(new DataPoint[]{
@@ -66,8 +70,23 @@ protected TextView graphTitle;
         //graph.addSeries(Series);
     }
 
+    private void setupUI() {
 
+        backGrphBtn = findViewById(R.id.bckgraphBtn);
+        backGrphBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                goToECUActivity();
+            }
+        });
+
+    }
+
+    private void goToECUActivity() {
+        Intent intent = new Intent(getApplicationContext(), ECUActivity.class);
+        startActivity(intent);
+    }
 
 
 }
