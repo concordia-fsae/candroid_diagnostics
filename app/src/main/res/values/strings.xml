@@ -2,18 +2,37 @@
     <string name="app_name">CANDroid Diagnostics</string>
 
     <string-array name="sensor_names">
-        <item>Sensor 1</item>
-        <item>Sensor 2</item>
-        <item>Sensor 3</item>
-        <item>Sensor 4</item>
-        <item>Sensor 5</item>
-        <item>Sensor 6</item>
-        <item>Sensor 7</item>
-        <item>Sensor 8</item>
-        <item>Sensor 9</item>
+        <item>Minimum Cell Voltage</item>
+        <item>Maximum Cell Voltage</item>
+        <item>Average Cell Voltage</item>
+        <item>Minimum Relative SOC</item>
+        <item>Maximum Relative SOC</item>
+        <item>Average Relative SOC</item>
+        <item>Charge Current Limit</item>
+        <item>Discharge Current Limit</item>
+        <item>Pack Voltage</item>
+        <item>Cell 1 Voltage</item>
+        <item>Cell 2 Voltage</item>
+        <item>Cell 3 Voltage</item>
+        <item>Cell 4 Voltage</item>
+        <item>Maximum Cell Temperature</item>
+        <item>MCU Temperature</item>
+        <item>Board Temperature 1</item>
+        <item>Board Temperature 2</item>
+        <item>Fan 1 Speed</item>
+        <item>Fan 2 Speed</item>
     </string-array>
 
     <string-array name="dummyData1_names">
+        <item>data 1 1</item>
+        <item>Data 1 2</item>
+        <item>Data 1 3</item>
+        <item>Data 1 4</item>
+        <item>Data 1 5</item>
+        <item>Data 1 6</item>
+        <item>Data 1 7</item>
+        <item>Data 1 8</item>
+        <item>Data 1 9</item>
         <item>Data 1 1</item>
         <item>Data 1 2</item>
         <item>Data 1 3</item>
@@ -23,20 +42,49 @@
         <item>Data 1 7</item>
         <item>Data 1 8</item>
         <item>Data 1 9</item>
+        <item>Data 1 6</item>
+        <item>Data 1 7</item>
+        <item>Data 1 8</item>
+        <item>Data 1 9</item>
+        <item>Data 1 1</item>
+        <item>Data 1 2</item>
+        <item>Data 1 3</item>
+        <item>Data 1 4</item>
+        <item>Data 1 5</item>
+        <item>Data 1 6</item>
+        <item>Data 1 7</item>
+        <item>Data 1 9</item>
     </string-array>
 
-    <string-array name="dummyData2_names">
-        <item>Data 2 1</item>
-        <item>Data 2 2</item>
-        <item>Data 2 3</item>
-        <item>Data 2 4</item>
-        <item>Data 2 5</item>
-        <item>Data 2 6</item>
-        <item>Data 2 7</item>
-        <item>Data 2 8</item>
-        <item>Data 2 9</item>
+    <string-array name="units_names">
+        <item>V</item>
+        <item>V</item>
+        <item>V</item>
+        <item>%</item>
+        <item>%</item>
+        <item>%</item>
+        <item>A</item>
+        <item>A</item>
+        <item>V</item>
+        <item>V</item>
+        <item>V</item>
+        <item>V</item>
+        <item>V</item>
+        <item>°C</item>
+        <item>°C</item>
+        <item>°C</item>
+        <item>°C</item>
+
+        <item>RPM</item>
+        <item>RPM</item>
+
+
     </string-array>
 
-
+    <string-array name="default_profiles">
+        <item>String 1</item>
+        <item>String 2</item>
+        <item>String 3</item>
+    </string-array>
 
 </resources>

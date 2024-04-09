@@ -5,6 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollIndicators="right"
+    android:scrollbarSize="4dp"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbarThumbVertical="@android:drawable/btn_default"
+    android:scrollbars="vertical"
     tools:context=".ECUActivity">
 
     <TextView
@@ -17,10 +22,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <ImageButton
         android:id="@+id/bck2Btn"
@@ -31,21 +35,46 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.007"
         app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewECU1"
         android:layout_width="409dp"
-        android:layout_height="647dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:clickable="false"
+        android:fadeScrollbars="false"
+        android:scrollIndicators="right"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="5dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@android:drawable/btn_default"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ecu1title" />
+        app:layout_constraintTop_toBottomOf="@+id/ecu1title"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="12"
+        tools:listitem="@layout/recycler_view_row" />
 
+    TextView
+        android:id="@+id/countVariables"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.092" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

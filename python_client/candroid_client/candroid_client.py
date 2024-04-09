@@ -43,24 +43,24 @@ def decode_message(can_message):
 
     match can_id:
         case "0x107":
-            mqtt_publish("ecu1/Min Cell Voltage",
+            mqtt_publish("ecu1/Minimum Cell Voltage",
                          str(int.from_bytes(can_message.data[0:2], "little")/10000))
-            mqtt_publish("ecu1/Max Cell Voltage",
+            mqtt_publish("ecu1/Maximum Cell Voltage",
                          str(int.from_bytes(can_message.data[2:4], "little")/10000))
-            mqtt_publish("ecu1/Avg Cell Voltage",
+            mqtt_publish("ecu1/Average Cell Voltage",
                          str(int.from_bytes(can_message.data[4:6], "little")/10000))
             mqtt_publish("ecu1/Pack Voltage",
                          str(int.from_bytes(can_message.data[6:8], "little")/1000))
         case "0x117":
-            mqtt_publish("ecu1/Min Relative SOC",
+            mqtt_publish("ecu1/Minimum Relative SOC",
                          str(int.from_bytes(can_message.data[0:1], "little")))
-            mqtt_publish("ecu1/Max Relative SOC",
+            mqtt_publish("ecu1/Maximum Relative SOC",
                          str(int.from_bytes(can_message.data[2:3], "little")))
-            mqtt_publish("ecu1/Avg Relative SOC",
+            mqtt_publish("ecu1/Average Relative SOC",
                          str(int.from_bytes(can_message.data[4:5], "little")))
-            mqtt_publish("ecu1/CCL",
+            mqtt_publish("ecu1/Charge Current Limit",
                          str(can_message.data[6]))
-            mqtt_publish("ecu1/DCL",
+            mqtt_publish("ecu1/Discharge Current Limit",
                          str(can_message.data[7]))
         case "0x707":
             mqtt_publish("ecu1/Cell 1 Voltage",
@@ -72,13 +72,13 @@ def decode_message(can_message):
             mqtt_publish("ecu1/Cell 4 Voltage",
                          str(int.from_bytes(can_message.data[6:8], "little") / 10000))
         case "0x747":
-            mqtt_publish("ecu1/MCU Temp",
+            mqtt_publish("ecu1/MCU Temperature",
                          str(can_message.data[0]))
-            mqtt_publish("ecu1/Board Temp 1",
+            mqtt_publish("ecu1/Board Temperature 1",
                          str(can_message.data[1]))
-            mqtt_publish("ecu1/Board Temp 2",
+            mqtt_publish("ecu1/Board Temperature 2",
                          str(can_message.data[2]))
-            mqtt_publish("ecu1/Max Cell Temp",
+            mqtt_publish("ecu1/Maximum Cell Temperature",
                          str(can_message.data[3]))
             mqtt_publish("ecu1/Fan 1 Speed",
                          str(int.from_bytes(can_message.data[4:6], "little")))
@@ -110,7 +110,10 @@ def main():
         while (True):
             response=None
 
-            response=bus.recv()
+            response=bus.recv(0.01)
+
+            if response == None:
+                continue
 
             print(response)
 
